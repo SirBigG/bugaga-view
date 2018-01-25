@@ -1,0 +1,23 @@
+.header_filter {
+  position: relative;
+  min-height: 300px;
+  background-position: center center;
+  background-size: cover;
+}
+
+.header_filter:after {
+  position: absolute;
+  z-index: 1;
+  width: 100%;
+  height: 100%;
+  display: block;
+  left: 0;
+  top: 0;
+  content: '';
+  background-color: rgba(0, 0, 0, 0.4);
+}
+
+.header_filter .container {
+  z-index: 2;
+  position: relative;
+}
