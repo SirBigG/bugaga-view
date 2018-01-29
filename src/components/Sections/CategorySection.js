@@ -1,5 +1,6 @@
 import React from 'react';
 
+import 'whatwg-fetch';
 import {
   Card,
   CardImg,
@@ -14,33 +15,34 @@ import {
 import withStyles from 'isomorphic-style-loader/lib/withStyles';
 
 class CategotySection extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {data: []};
+  }
+
+  componentDidMount() {
+    fetch('http://localhost:8888/api/classifiers/', {method: 'GET'}).then((response) => {
+        if (response.status === 200) {
+          response.json().then(
+            (json) => {this.setState({data: json})})}})
+  }
+
   render() {
+    const classifiers = this.state.data.map((item, i) => {
+      return (
+        <Col md={4} key={i}>
+          <Card>
+            <CardBody>
+              <CardText>{item.title}</CardText>
+              <Button>Subscribe</Button>
+            </CardBody>
+          </Card>
+        </Col>
+      )
+    });
     return (
       <Row>
-        <Col md={4}>
-          <Card>
-            <CardBody>
-              <CardText>CardText</CardText>
-              <Button>Subscribe</Button>
-            </CardBody>
-          </Card>
-        </Col>
-        <Col md={4}>
-          <Card>
-            <CardBody>
-              <CardText>CardText</CardText>
-              <Button>Subscribe</Button>
-            </CardBody>
-          </Card>
-        </Col>
-        <Col md={4}>
-          <Card>
-            <CardBody>
-              <CardText>CardText</CardText>
-              <Button>Subscribe</Button>
-            </CardBody>
-          </Card>
-        </Col>
+        {classifiers}
       </Row>
     );
   }
